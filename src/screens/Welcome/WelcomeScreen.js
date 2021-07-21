@@ -19,10 +19,12 @@ function WelcomeScreen({navigation}) {
       <View style={styles.buttonContainer}>
         <Button
           title="Log In"
+          marginTop={10}
           onPress={() => navigation.navigate('Login')}
         />
         <Button
           title="Sign Up"
+          marginTop={10}
           color="secondary"
           onPress={() => navigation.navigate('Signup')}
         />

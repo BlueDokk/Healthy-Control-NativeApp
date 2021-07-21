@@ -1,16 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
+import styles from './styles';
 
-function TextNavigatorComponent({children}) {
+function TextNavigatorComponent({ children, targetPath, style }) {
+
+
+
   return (
-    <Text style={styles.text}>{children}</Text>
+
+    <TouchableOpacity onPress={targetPath}>
+      <Text style={[styles.text, style]}>{children}</Text>
+    </TouchableOpacity>
   );
 }
 
-const styles = StyleSheet.create({
-  text: {
-
-  }
-});
 
 export default TextNavigatorComponent;

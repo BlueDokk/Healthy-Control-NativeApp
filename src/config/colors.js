@@ -9,6 +9,6 @@ export default {
     placeholder: '#a5a5a5',
     blueIcons: '#7dadb8',
     white: '#ffffff',
-    black: '#000000'
-
+    black: '#000000',
+    alert: '#ee4488',
 }

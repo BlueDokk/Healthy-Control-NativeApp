@@ -2,10 +2,12 @@ import { StyleSheet } from 'react-native';
 import colors from '../../config/colors';
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: colors.background,
-        alignItems: 'center',
-    },
+    separator: {
+        backgroundColor: colors.primary,
+        marginBottom: 30,
+        width: 280,
+        height: 1,
+    }
 });
 
 export default styles;
