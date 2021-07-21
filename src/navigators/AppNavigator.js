@@ -1,106 +1,39 @@
-import React from 'react';
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { FontAwesome5 } from '@expo/vector-icons';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import RecordsScreen from '../screens/Records/RecordsScreen';
-import CalculatorScreen from '../screens/Calculator/CalculatorScreen';
-import AboutBMIScreen from '../screens/aboutBMI/AboutBMIScreen';
-import ProfileScreen from '../screens/Profile/ProfileScreen';
-import colors from '../config/colors';
-import { TouchableOpacity } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import DashboardNavigator from './DashboardNavigator';
+import AuthNavigator from './AuthNavigator';
 import authService from '../firebase/authServices';
+import storage from '../utility/storage';
+import ActivityIndicator from '../components/ActivityIndicator/ActivityIndicatorComponent';
+import {login} from '../actions/auth';
+import navigationTheme from './navigationTheme';
 
+function AppNavigator() {
 
-const Tab = createBottomTabNavigator();
+    const [user, setUser] = useState(null);
 
-const handleLogout = ()=>{
-    AsyncStorage.clear();
-    authService.logOut();
-}
+    const dispatch = useDispatch();
 
-function AppNavigator(props) {
+    useEffect(() => {
+
+        authService.currentUser((user) => {
+            if (user?.uid) {
+
+                storage.storeData(user.uid);
+                dispatch(login(user.uid, user.displayName));
+                return setUser(user.uid);
+            }
+            setUser(null);
+        })
+
+    }, [])
+
     return (
-        <Tab.Navigator
-            initialRouteName="Calculator"
-            activeTintColor='#fff'
-            tabBarOptions={{
-                style: {
-                    backgroundColor: colors.primary,
-                    color: colors.white,
-                }
-            }}
-
-        >
-            <Tab.Screen
-                name="AboutBMI"
-                component={AboutBMIScreen}
-                options={{
-                    tabBarIcon: ({ focused, color, size }) => (
-                        <FontAwesome5
-                            name="info-circle"
-                            size={size}
-                            color={focused ? colors.white : colors.lightAccent}
-                        />
-                    )
-                }}
-            />
-            <Tab.Screen
-                name="My Records"
-                component={RecordsScreen}
-                options={{
-                    tabBarIcon: ({ color, size }) => (
-                        <FontAwesome5
-                            name="server"
-                            size={size}
-                            color={color}
-                        />
-                    )
-                }}
-            />
-            <Tab.Screen
-                name="Calculator"
-                component={CalculatorScreen}
-                options={{
-                    tabBarIcon: ({ color, size }) => (
-                        <FontAwesome5
-                            name="calculator"
-                            size={size}
-                            color={color}
-                        />
-                    )
-                }}
-            />
-            <Tab.Screen
-                name="Profile"
-                component={ProfileScreen}
-                options={{
-                    tabBarIcon: ({ color, size }) => (
-                        <FontAwesome5
-                            name="user-alt"
-                            size={size}
-                            color={color}
-                        />
-                    )
-                }}
-            />
-            <Tab.Screen
-                name="Logout"
-                component={ProfileScreen}
-                options={{
-                    tabBarIcon: ({ color, size }) => (
-                        <TouchableOpacity onPress={handleLogout}>
-                            <FontAwesome5
-                                name="sign-out-alt"
-                                size={size}
-                                color={color}
-                            />
-                        </TouchableOpacity>
-                    )
-                }}
-            />
-
-        </Tab.Navigator>
+        <NavigationContainer theme={navigationTheme}>
+            {user ? <DashboardNavigator /> : <AuthNavigator />}
+        </NavigationContainer>
     );
 }
 

@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import * as Yup from "yup";
 import { useSelector, useDispatch } from 'react-redux';
-
 
 import Form from '../../components/Form/FormComponent';
 import FormField from '../../components/FormField/FormFieldComponent';
@@ -13,20 +11,15 @@ import Title from '../../components/Title/TitleComponent';
 import SeparatorComponent from '../../components/Separator/SeparatorComponent';
 import SubmitButtonComponent from '../../components/SubmitButton/SubmitButtonComponent';
 import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicatorComponent';
-
-import styles from './styles';
+import validationSchemas from '../../utility/validationSchemas';
 import { registerWithEmailPasswordName } from '../../actions/auth';
 
-const validationSchema = Yup.object().shape({
-  name: Yup.string().required().label("Name"),
-  lastname: Yup.string().required().label("Lastname"),
-  email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(6).label("Password"),
-});
+import styles from './styles';
+
 
 function SignupScreen({ navigation }) {
 
-  const [loginFailed, setLoginFailed] = useState(false);
+  const [signupFailed, setSignupFailed] = useState(false);
   const { loading } = useSelector(state => state.loading);
 
   const dispatch = useDispatch();
@@ -38,7 +31,7 @@ function SignupScreen({ navigation }) {
     const name = `${username} ${lastname}`;
     
     dispatch(registerWithEmailPasswordName(email, password, name));
-    console.log(userInfo);
+  
   };
 
   return (
@@ -50,11 +43,11 @@ function SignupScreen({ navigation }) {
         <Form
           initialValues={{ name: "", lastname: "", email: "", password: "" }}
           onSubmit={handleSubmit}
-          validationSchema={validationSchema}
+          validationSchema={validationSchemas.signupSchema}
         >
           <ErrorMessage
             error="Invalid lastname."
-            visible={loginFailed} />
+            visible={signupFailed} />
           <FormField
             autoCorrect={false}
             name="name"

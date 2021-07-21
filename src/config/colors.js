@@ -12,3 +12,4 @@ export default {
     black: '#000000',
     alert: '#ee4488',
 }
+

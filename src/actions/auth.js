@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { types } from "../types/types";
 import authService from "../firebase/authServices";
 import { startLoading, finishLoading } from "./loading";
+import { Alert } from 'react-native';
 
 const storeData = async (key, value) => {
     try {
@@ -13,6 +14,8 @@ const storeData = async (key, value) => {
 }
 
 export const loginWithEmailPassword = (email, password) => {
+
+
     return (dispatch) => {
 
         dispatch(startLoading());
@@ -25,8 +28,8 @@ export const loginWithEmailPassword = (email, password) => {
                 dispatch(finishLoading());
 
                 console.log('Successful login');
-            }).catch(error => {
-                console.log(`Error: ${error}`);
+            }).catch(() => {
+                Alert.alert("Error: Invalid email or password.");
                 dispatch(finishLoading());
             });
 
@@ -52,7 +55,7 @@ export const registerWithEmailPasswordName = (email, password, name) => {
                 console.log('Successful registration')
 
             }).catch(error => {
-                console.log(`Error: ${error}`);
+                Alert.alert(`${error}`);
                 dispatch(finishLoading());
             });;
     }
