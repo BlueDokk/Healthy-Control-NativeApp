@@ -3,10 +3,10 @@ import { View } from 'react-native';
 
 import styles from './styles';
 
-function SeparatorComponent(props) {
+function SeparatorComponent({style}) {
     return (
         <View
-            style={styles.separator}
+            style={[styles.separator, style]}
         />
     );
 }

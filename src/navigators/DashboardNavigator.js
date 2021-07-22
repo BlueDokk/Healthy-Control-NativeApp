@@ -26,14 +26,15 @@ function DashboardNavigator(props) {
             initialRouteName="Calculator"
             tabBarOptions={{
                 showLabel: false,
+                keyboardHidesTabBar: true,
                 style: {
-                    position: 'absolute',
-                    bottom: 25,
-                    left: 10,
-                    right: 10,
+                    // position: 'absolute',
+                    // bottom: 20,
+                    // left: 10,
+                    // right: 10,
+                    // borderRadius: 15,
                     elevation: 0,
                     backgroundColor: colors.primary,
-                    borderRadius: 15,
                     height: 90,
                     ...styles.shadow
                 }

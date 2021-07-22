@@ -14,12 +14,7 @@ import {
 
 import styles from './styles';
 
-function TitleComponent({
-    children,
-    fontSize = 30,
-    marginTop = 50,
-    marginBottom = 20,
-}) {
+function AccentTextComponent({children, style}) {
 
     let [fontsLoaded] = useFonts({
         Orbitron_400Regular,
@@ -34,9 +29,9 @@ function TitleComponent({
         return <AppLoading />
     } else {
         return (
-            <Text style={[styles.title, { fontSize, marginTop, marginBottom }]}>{children}</Text>
+            <Text style={[styles.title, style]}>{children}</Text>
         );
     }
 }
 
-export default TitleComponent;
+export default AccentTextComponent;
