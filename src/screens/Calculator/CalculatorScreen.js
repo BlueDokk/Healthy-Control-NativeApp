@@ -12,10 +12,12 @@ import Title from '../../components/Title/TitleComponent';
 import { selectCalculatorImage } from '../../utility/selectImageCalculator';
 import { LinearGradient } from 'expo-linear-gradient';
 import firestoreService from '../../firebase/firebaseServices';
+import { lastBmi, saveRecord } from '../../actions/ui';
+import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicatorComponent';
+
 
 import styles from './styles';
 import colors from '../../config/colors';
-import { lastBmi, saveRecord } from '../../actions/ui';
 
 function CalculatorScreen(props) {
 
@@ -27,13 +29,14 @@ function CalculatorScreen(props) {
 
   const dispatch = useDispatch();
   const { records } = useSelector(state => state.ui);
+  const { loading } = useSelector(state => state.loading);
   const { uid: userId } = useSelector(state => state.auth);
 
 
   useEffect(() => {
 
     // Every time the records change it is stored in the fireStore database.
-    if(records) firestoreService.saveRecord(records, userId);
+    if (records) firestoreService.saveRecord(records, userId);
     setBmiImage(selectCalculatorImage(bmiScore));
 
   }, [bmiScore, records])
@@ -59,6 +62,7 @@ function CalculatorScreen(props) {
 
   }
 
+
   const handleSaveRecord = () => {
 
     calculateBmi(weight, height);
@@ -67,55 +71,58 @@ function CalculatorScreen(props) {
   }
 
   return (
-    <Screen style={styles.container}>
-      <Title marginTop={20}>BMI Calculator</Title>
-      <View style={styles.calculator}>
-        <LinearGradient
-          // Background Linear Gradient
-          colors={['transparent',colors.background]}
-          style={styles.backgroundCalculator}
-        />
-        <Image
-          source={bmiImage}
-          resizeMode={'contain'}
-          style={styles.image}
-        />
-        <AccentText style={styles.bmiNumber}> {bmiScore} </AccentText>
-        <AccentText style={styles.bmiText}> BMI </AccentText>
-        <Separator style={styles.separator} />
-        <InputNumeric
-          label='Weight (Kg):'
-          onChangeText={setWeight}
-          value={weight}
-        />
-        <InputNumeric
-          label='Height (cm):'
-          onChangeText={setHeight}
-          value={height}
-        />
+    <>
+      <ActivityIndicator visible={loading} />
+      <Screen style={styles.container}>
+        <Title marginTop={20}>BMI Calculator</Title>
+        <View style={styles.calculator}>
+          <LinearGradient
+            // Background Linear Gradient
+            colors={['transparent', colors.background]}
+            style={styles.backgroundCalculator}
+          />
+          <Image
+            source={bmiImage}
+            resizeMode={'contain'}
+            style={styles.image}
+          />
+          <AccentText style={styles.bmiNumber}> {bmiScore} </AccentText>
+          <AccentText style={styles.bmiText}> BMI </AccentText>
+          <Separator style={styles.separator} />
+          <InputNumeric
+            label='Weight (Kg):'
+            onChangeText={setWeight}
+            value={weight}
+          />
+          <InputNumeric
+            label='Height (cm):'
+            onChangeText={setHeight}
+            value={height}
+          />
 
-        <Button
-          title="Calculate"
-          marginTop={10}
-          onPress={() => { calculateBmi(weight, height) }}
-        />
-        <Button
-          title="Save record"
-          color='secondary'
-          marginTop={0}
-          onPress={() => { handleSaveRecord() }}
-        />
+          <Button
+            title="Calculate"
+            marginTop={10}
+            onPress={() => { calculateBmi(weight, height) }}
+          />
+          <Button
+            title="Save record"
+            color='secondary'
+            marginTop={0}
+            onPress={() => { handleSaveRecord() }}
+          />
 
-        <AlertComponent
-          title={'Error: Invalid measurement.'}
-          message={'Please enter a valid height or weight value.'}
-          onShow={showAlert}
-          onHide={() => { setShowAlert(false) }}
-        />
+          <AlertComponent
+            title={'Error: Invalid measurement.'}
+            message={'Please enter a valid height or weight value.'}
+            onShow={showAlert}
+            onHide={() => { setShowAlert(false) }}
+          />
 
-      </View>
+        </View>
 
-    </Screen>
+      </Screen>
+    </>
   );
 }
 

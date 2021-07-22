@@ -1,15 +1,22 @@
 import { StyleSheet } from 'react-native';
+import Constants from "expo-constants";
 import colors from '../../config/colors';
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: colors.background,
+        paddingTop: Constants.statusBarHeight,
+        paddingHorizontal: 30,
         alignItems: 'center',
+        flex: 1,
     },
-    headerRecords:{
-        color: colors.secondary,
-    }
-
+    row: {
+        backgroundColor: colors.secondary,
+        borderRadius: 6,
+        marginVertical: 4,
+    },
+    text: {
+        color: colors.white,
+    },
 });
 
 export default styles;

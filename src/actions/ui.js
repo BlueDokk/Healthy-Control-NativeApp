@@ -19,8 +19,6 @@ export const saveRecord = () => ({
 
 export const getRecordsFromFirestore = () => {
 
-
-
     return async (dispatch) => {
         
         dispatch(startLoading());

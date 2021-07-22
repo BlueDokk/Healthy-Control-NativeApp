@@ -1,19 +1,24 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { useSelector } from 'react-redux';
+import { View, ScrollView, Text } from 'react-native';
 
-import Screen from '../../components/ScreenTag/ScreenTagComponent';
 import Title from '../../components/Title/TitleComponent';
-import AccentText from '../../components/AccentText/AccentTextComponent';
+import RecordTableComponent from '../../components/RecordTable/RecordTableComponent';
 
 import styles from './styles';
 
-
 function RecordsScreen(props) {
+
+  const { records } = useSelector(state => state.ui)
+
   return (
-    <Screen style={styles.container}>
+    <ScrollView>
+      <View style={styles.container}>
         <Title marginTop={20}>My Records</Title>
-        <AccentText style={styles.headerRecords}> #         Weight        Height          BMI </AccentText>
-    </Screen>
+  <RecordTableComponent records={records}/>
+        
+      </View>
+    </ScrollView>
   );
 }
 
