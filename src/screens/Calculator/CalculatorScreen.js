@@ -15,6 +15,7 @@ import firestoreService from '../../firebase/firebaseServices';
 
 import styles from './styles';
 import colors from '../../config/colors';
+import { lastBmi, saveRecord } from '../../actions/ui';
 
 function CalculatorScreen(props) {
 
@@ -35,7 +36,7 @@ function CalculatorScreen(props) {
     // firestoreService.saveRecord(records, userId);
     setBmiImage(selectCalculatorImage(bmiScore));
 
-  }, [bmiScore, dispatch])
+  }, [bmiScore])
 
   const calculateBmi = (weight, height) => {
 
@@ -59,13 +60,10 @@ function CalculatorScreen(props) {
   }
 
   const handleSaveRecord = () => {
-    if ((parseFloat(height)) <= 0 || parseFloat(weight) <= 0) {
-      setWeight(null);
-      setHeight(null);
-      return setShowAlert(true);
-    }
+
     calculateBmi(weight, height);
     dispatch(saveRecord());
+
   }
 
   return (

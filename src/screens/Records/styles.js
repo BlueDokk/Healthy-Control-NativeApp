@@ -3,8 +3,12 @@ import colors from '../../config/colors';
 
 const styles = StyleSheet.create({
     container: {
-
+        backgroundColor: colors.background,
+        alignItems: 'center',
     },
+    headerRecords:{
+        color: colors.secondary,
+    }
 
 });
 
