@@ -33,10 +33,10 @@ function CalculatorScreen(props) {
   useEffect(() => {
 
     // Every time the records change it is stored in the fireStore database.
-    // firestoreService.saveRecord(records, userId);
+    if(records) firestoreService.saveRecord(records, userId);
     setBmiImage(selectCalculatorImage(bmiScore));
 
-  }, [bmiScore])
+  }, [bmiScore, records])
 
   const calculateBmi = (weight, height) => {
 

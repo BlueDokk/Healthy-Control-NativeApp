@@ -1,35 +1,44 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Image, View } from 'react-native';
+import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicatorComponent';
 import BannerImage from '../../components/BannerImage/BannerImageComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Screen from '../../components/ScreenTag/ScreenTagComponent';
 
+
 import styles from './styles';
 
-function WelcomeScreen({navigation}) {
-  return (
-    <Screen style={styles.container}>
-      <Image
-        style={styles.logo}
-        source={require('../../../assets/images/logo.png')}
-      />
-      
-      <BannerImage />
+function WelcomeScreen({ navigation }) {
 
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Log In"
-          marginTop={10}
-          onPress={() => navigation.navigate('Login')}
+  const { loading } = useSelector(state => state.loading);
+
+  return (
+    <>
+      <ActivityIndicator visible={loading} />
+      <Screen style={styles.container}>
+        <Image
+          style={styles.logo}
+          source={require('../../../assets/images/logo.png')}
         />
-        <Button
-          title="Sign Up"
-          marginTop={10}
-          color="secondary"
-          onPress={() => navigation.navigate('Signup')}
-        />
-      </View>
-    </Screen>
+
+        <BannerImage />
+
+        <View style={styles.buttonContainer}>
+          <Button
+            title="Log In"
+            marginTop={10}
+            onPress={() => navigation.navigate('Login')}
+          />
+          <Button
+            title="Sign Up"
+            marginTop={10}
+            color="secondary"
+            onPress={() => navigation.navigate('Signup')}
+          />
+        </View>
+      </Screen>
+    </>
   );
 }
 

@@ -5,6 +5,7 @@ import firestoreService from '../firebase/firebaseServices';
 import { types } from "../types/types";
 import { startLoading, finishLoading } from "./loading";
 import { Alert } from 'react-native';
+import storage from '../utility/storage';
 
 const storeData = async (key, value) => {
     try {
@@ -25,7 +26,7 @@ export const loginWithEmailPassword = (email, password) => {
             .then(({ user }) => {
 
                 dispatch(login(user.uid, user.displayName))
-
+                storage.storeData('user',{userId: user.uid, displayName: user.displayName});
                 dispatch(finishLoading());
 
                 console.log('Successful login');
@@ -56,7 +57,7 @@ export const registerWithEmailPasswordName = (email, password, name) => {
                 await user.updateProfile({ displayName: name });
 
                 dispatch(login(user.uid, user.displayName))
-                storeData('user', user.uid);
+                storage.storeData('user',{userId: user.uid, displayName: user.displayName});
                 dispatch(finishLoading());
 
                 firestoreService.sendData(dataUser, user.uid);

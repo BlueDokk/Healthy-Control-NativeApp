@@ -12,8 +12,6 @@ import SeparatorComponent from '../../components/Separator/SeparatorComponent';
 import SubmitButton from '../../components/SubmitButton/SubmitButtonComponent';
 import validationSchemas from '../../utility/validationSchemas';
 import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicatorComponent';
-import { useFormik } from "formik";
-
 
 import styles from './styles';
 import { loginWithEmailPassword } from '../../actions/auth';

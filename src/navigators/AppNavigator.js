@@ -11,6 +11,7 @@ import {login} from '../actions/auth';
 import navigationTheme from './navigationTheme';
 import { getRecordsFromFirestore } from '../actions/ui';
 
+
 function AppNavigator() {
 
     const [user, setUser] = useState(null);
@@ -18,20 +19,16 @@ function AppNavigator() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-
         authService.currentUser((user) => {
             if (user?.uid) {
-                const userId = user.uid;
-
-                storage.storeData(userId);
-                dispatch(login(userId, user.displayName));
-                dispatch(getRecordsFromFirestore(userId));
-                return setUser(userId);
+                storage.storeData('user',{userId: user.uid, displayName: user.displayName});
+                dispatch(login(user.uid, user.displayName));
+                dispatch(getRecordsFromFirestore());
+                return setUser(user.uid);
             }
             setUser(null);
         })
-
-    }, [dispatch])
+    }, [])
 
     return (
         <NavigationContainer theme={navigationTheme}>
