@@ -1,15 +1,16 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { types } from "../types/types";
 import authService from "../firebase/authServices";
+import firestoreService from '../firebase/firebaseServices';
+import { types } from "../types/types";
 import { startLoading, finishLoading } from "./loading";
 import { Alert } from 'react-native';
 
 const storeData = async (key, value) => {
     try {
         await AsyncStorage.setItem(key, value)
-    } catch (e) {
-        // saving error
+    } catch (error) {
+        Alert.alert(error);
     }
 }
 
@@ -38,6 +39,12 @@ export const loginWithEmailPassword = (email, password) => {
 
 export const registerWithEmailPasswordName = (email, password, name) => {
 
+    const dataUser = {
+        username: name,
+        email,
+        records: []
+    }
+
 
     return (dispatch) => {
 
@@ -51,6 +58,8 @@ export const registerWithEmailPasswordName = (email, password, name) => {
                 dispatch(login(user.uid, user.displayName))
                 storeData('user', user.uid);
                 dispatch(finishLoading());
+
+                firestoreService.sendData(dataUser, user.uid);
 
                 console.log('Successful registration')
 
@@ -88,7 +97,7 @@ export const startLogout = () => {
 export const deleteAccount = (userId) => {
 
     return (dispatch) => {
-
+        firestoreService.deleteUser(userId);
         authService.deleteAccount(userId);
         dispatch(logout());
     }

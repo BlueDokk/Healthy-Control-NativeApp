@@ -14,9 +14,16 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         width: '85%',
     },
+    backgroundCalculator: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        height: '110%',
+    },
     image: {
         width: 124,
-        height: 230,
+        height: 240,
     },
     separator: {
         marginBottom: 15,

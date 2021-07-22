@@ -9,6 +9,7 @@ import storage from '../utility/storage';
 import ActivityIndicator from '../components/ActivityIndicator/ActivityIndicatorComponent';
 import {login} from '../actions/auth';
 import navigationTheme from './navigationTheme';
+import { getRecordsFromFirestore } from '../actions/ui';
 
 function AppNavigator() {
 
@@ -20,15 +21,17 @@ function AppNavigator() {
 
         authService.currentUser((user) => {
             if (user?.uid) {
+                const userId = user.uid;
 
-                storage.storeData(user.uid);
-                dispatch(login(user.uid, user.displayName));
-                return setUser(user.uid);
+                storage.storeData(userId);
+                dispatch(login(userId, user.displayName));
+                dispatch(getRecordsFromFirestore(userId));
+                return setUser(userId);
             }
             setUser(null);
         })
 
-    }, [])
+    }, [dispatch])
 
     return (
         <NavigationContainer theme={navigationTheme}>

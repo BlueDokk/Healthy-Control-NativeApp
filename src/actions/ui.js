@@ -1,6 +1,7 @@
 import { types } from "../types/types";
-// import { startLoading, finishLoading } from "./loading";
-// import firestoreService from './../firebase/firestoreServices';
+import { startLoading, finishLoading } from "./loading";
+import firestoreService from '../firebase/firebaseServices';
+import storage from '../utility/storage';
 
 export const lastBmi = (lastWeight, lastHeight, lastBmi) => ({
     type: types.lastBmi,
@@ -16,21 +17,21 @@ export const saveRecord = () => ({
 })
 
 
-// export const getRecordsFromFirestore = () => {
+export const getRecordsFromFirestore = (userId) => {
 
-//     return (dispatch) => {
-//         dispatch(startLoading());
+    return (dispatch) => {
+        dispatch(startLoading());
 
-//         const userId = localStorage.getItem('user');
-//         firestoreService.getDataUser(userId)
-//             .then((doc) => {
-//                 const records = doc.data().records;
-//                 dispatch(updateRecords(records));
-//                 dispatch(finishLoading());
-//             });
+        // const userId = storage.getData('user');
+        firestoreService.getDataUser(userId)
+            .then((doc) => {
+                const records = doc.data().records;
+                dispatch(updateRecords(records));
+                dispatch(finishLoading());
+            });
 
-//     }
-// }
+    }
+}
 
 export const updateRecords = (records) => ({
     type: types.updateRecords,
