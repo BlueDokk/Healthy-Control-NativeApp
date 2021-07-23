@@ -1,6 +1,6 @@
 import React from 'react';
 import LottieView from 'lottie-react-native';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import colors from '../../config/colors';
 
 
@@ -18,6 +18,8 @@ function ActivityIndicatorComponent({ visible = false }) {
         </View>
     );
 }
+
+console.log(Platform.OS);
 
 const styles = StyleSheet.create({
     overlay: {

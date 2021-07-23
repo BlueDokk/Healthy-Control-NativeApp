@@ -1,10 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert } from 'react-native';
 
 import authService from "../firebase/authServices";
 import firestoreService from '../firebase/firebaseServices';
 import { types } from "../types/types";
 import { startLoading, finishLoading } from "./loading";
-import { Alert } from 'react-native';
 import storage from '../utility/storage';
 import { updateRecords } from './ui';
 
@@ -50,7 +50,6 @@ export const registerWithEmailPasswordName = (email, password, name) => {
 
                 dispatch(login(user.uid, user.displayName, user.email));
                 dispatch(finishLoading());
-
 
                 console.log('Successful registration')
 
@@ -105,7 +104,5 @@ export const deleteAccount = () => {
         }).catch((error) => {
             Alert.alert("Error deleting account: ", error);
         });;
-
     }
-
 }

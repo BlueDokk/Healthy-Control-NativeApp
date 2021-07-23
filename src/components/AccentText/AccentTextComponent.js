@@ -1,7 +1,5 @@
 import React from 'react';
 import { Text } from 'react-native';
-import AppLoading from 'expo-app-loading';
-
 import {
     useFonts,
     Orbitron_400Regular,
@@ -12,9 +10,10 @@ import {
     Orbitron_900Black,
 } from '@expo-google-fonts/orbitron';
 
+import ActivityIndicator from '../ActivityIndicator/ActivityIndicatorComponent';
 import styles from './styles';
 
-function AccentTextComponent({children, style}) {
+function AccentTextComponent({ children, style }) {
 
     let [fontsLoaded] = useFonts({
         Orbitron_400Regular,
@@ -25,8 +24,9 @@ function AccentTextComponent({children, style}) {
         Orbitron_900Black,
     });
 
+    // Show loading indicator while fonts are loaded.
     if (!fontsLoaded) {
-        return <AppLoading />
+        return <ActivityIndicator visible={true} />
     } else {
         return (
             <Text style={[styles.title, style]}>{children}</Text>
