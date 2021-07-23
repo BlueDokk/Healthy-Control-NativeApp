@@ -25,6 +25,9 @@
         "backgroundColor": "#FFFFFF"
       }
     },
+    "notification":{
+      "iosDisplayInForeground": true
+    },
     "web": {
       "favicon": "./assets/favicon.png"
     }

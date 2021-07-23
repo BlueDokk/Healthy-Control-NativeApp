@@ -21,7 +21,6 @@ export const getRecordsFromFirestore = () => {
 
     return async (dispatch) => {
 
-        dispatch(startLoading());
         
         const { userId } = await storage.getData('user');
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Image, View } from 'react-native';
+import * as Notifications from 'expo-notifications';
 
 import AccentText from '../../components/AccentText/AccentTextComponent';
 import AlertComponent from '../../components/Alert/AlertComponent';
@@ -18,6 +19,14 @@ import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndica
 import styles from './styles';
 import colors from '../../config/colors';
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
 function CalculatorScreen(props) {
 
   const [weight, setWeight] = useState(null);
@@ -32,11 +41,20 @@ function CalculatorScreen(props) {
   const { uid: userId } = useSelector(state => state.auth);
 
   const saveRecordsInFireStore = () => {
-    if(records) firestoreService.saveRecord(records, userId);
+    if (records) firestoreService.saveRecord(records, userId);
   }
 
+  const showNotification = (content) => {
+    Notifications.scheduleNotificationAsync({
+      content,
+      trigger: {
+        seconds: 1,
+      },
+    });
+  };
+
   useEffect(() => {
-    
+
     dispatch(getRecordsFromFirestore());
 
   }, [dispatch]);
@@ -65,6 +83,7 @@ function CalculatorScreen(props) {
       : 0;
 
     setBmiScore(result);
+    showNotification({title:'Healthy Control Notification', body:'New calculation of body mass index (BMI) has been carried out.'});
     dispatch(lastBmi(weight, height, result));
 
   }
@@ -73,6 +92,8 @@ function CalculatorScreen(props) {
 
     calculateBmi(weight, height);
     dispatch(saveRecord());
+    showNotification({title:'Healthy Control Notification', body:'Body mass index (BMI) score has been saved.'});
+
 
   }
 

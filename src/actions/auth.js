@@ -17,7 +17,6 @@ export const loginWithEmailPassword = (email, password) => {
 
         authService.login(email, password)
             .then(({ user }) => {
-                console.log(user.email);
                 dispatch(login(user.uid, user.displayName, user.email));
                 storage.storeData('user', { userId: user.uid, displayName: user.displayName, email: user.email });
                 dispatch(finishLoading());
@@ -53,7 +52,7 @@ export const registerWithEmailPasswordName = (email, password, name) => {
                 dispatch(finishLoading());
 
 
-                Alert.alert('Successful registration')
+                console.log('Successful registration')
 
             }).catch(error => {
                 Alert.alert(`${error}`);
