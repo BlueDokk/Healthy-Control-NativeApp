@@ -62,7 +62,6 @@ function CalculatorScreen(props) {
 
   }
 
-
   const handleSaveRecord = () => {
 
     calculateBmi(weight, height);
@@ -77,7 +76,6 @@ function CalculatorScreen(props) {
         <Title marginTop={20}>BMI Calculator</Title>
         <View style={styles.calculator}>
           <LinearGradient
-            // Background Linear Gradient
             colors={['transparent', colors.background]}
             style={styles.backgroundCalculator}
           />

@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch, useSelector } from 'react-redux';
 
 import RecordsScreen from '../screens/Records/RecordsScreen';
 import CalculatorScreen from '../screens/Calculator/CalculatorScreen';
@@ -8,20 +8,21 @@ import AboutBMIScreen from '../screens/aboutBMI/AboutBMIScreen';
 import ProfileScreen from '../screens/Profile/ProfileScreen';
 import colors from '../config/colors';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import authService from '../firebase/authServices';
 import ButtonTab from '../components/ButtonTab/ButtonTabComponent';
 import ButtonTabMainComponent from '../components/ButtonTabMain/ButtonTabMainComponent';
+import { startLogout } from '../actions/auth';
 
-
-const Tab = createBottomTabNavigator();
-
-const handleLogout = () => {
-    AsyncStorage.clear();
-    authService.logOut();
-};
 
 function DashboardNavigator(props) {
-
+    
+    const {userId} = useSelector(state => state.ui)
+    const Tab = createBottomTabNavigator();
+    const dispatch = useDispatch();
+    
+    const handleLogout = () => {
+    
+        dispatch(startLogout(userId))
+    };
     return (
         <Tab.Navigator
             initialRouteName="Calculator"
@@ -35,7 +36,6 @@ function DashboardNavigator(props) {
                     ...styles.shadow
                 }
             }}
-
         >
             <Tab.Screen
                 name="AboutBMI"

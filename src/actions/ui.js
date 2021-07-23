@@ -20,17 +20,18 @@ export const saveRecord = () => ({
 export const getRecordsFromFirestore = () => {
 
     return async (dispatch) => {
-        
+
         dispatch(startLoading());
-        const {userId} = await storage.getData('user');
+        const { userId } = await storage.getData('user');
 
         firestoreService.getDataUser(userId)
             .then((doc) => {
                 const records = doc.data().records;
                 dispatch(updateRecords(records));
                 dispatch(finishLoading());
-            }).catch((error)=>{
+            }).catch((error) => {
                 console.log(error);
+                dispatch(finishLoading());
             });
     }
 }

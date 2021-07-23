@@ -1,14 +1,73 @@
-import React from 'react';
-import { Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Text, View, TouchableHighlight } from 'react-native';
+import { FontAwesome5 } from '@expo/vector-icons';
+
 import Screen from '../../components/ScreenTag/ScreenTagComponent';
+import storage from '../../utility/storage';
+import ItemProfileComponent from '../../components/ItemProfile/ItemProfileComponent';
+import { deleteAccount } from '../../actions/auth';
+import firestoreService from '../../firebase/firebaseServices';
 
 import styles from './styles';
+import colors from '../../config/colors';
+
 
 
 function ProfileScreen(props) {
+
+  const [username, setUsername] = useState(null);
+  const [email, setEmail] = useState(null);
+  const {userId} = useSelector(state => state.ui)
+  const dispatch = useDispatch();
+
+  const getUsername = async () => {
+    const { displayName, email } = await storage.getData('user');
+    setUsername(displayName);
+    setEmail(email);
+  }
+
+  useEffect(() => {
+    getUsername();
+  }, [])
+
+  const handleDeleteAccount = ()=>{
+    firestoreService.deleteUser(userId);
+    dispatch(deleteAccount(userId));
+  }
+
+
   return (
     <Screen style={styles.container}>
-        <Text>Profile Screen</Text>
+      <View style={styles.header}>
+        <FontAwesome5
+          name='user-alt'
+          size={50}
+          color={colors.primary}
+        />
+        <View style={styles.userContainer}>
+          <Text style={styles.username}>{username}</Text>
+          <Text style={styles.email}>{email}</Text>
+        </View>
+      </View>
+
+      <ItemProfileComponent
+        icon='edit'
+        label='Edit profile'
+        size={25}
+        onPress={() => console.log('press')}
+      />
+      <ItemProfileComponent
+        icon='cog'
+        label='Settings'
+        onPress={() => console.log('press')}
+      />
+      <ItemProfileComponent
+        icon='user-slash'
+        label='Delete account'
+        size={25}
+        onPress={handleDeleteAccount}
+      />
     </Screen>
   );
 }

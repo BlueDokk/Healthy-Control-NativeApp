@@ -6,6 +6,7 @@ export default {
     secondary: "#30343f",
     secondaryHover: '#6c757d',
     lightAccent: '#fafaff',
+    lightBlue: '#F1EBFF',
     placeholder: '#a5a5a5',
     blueIcons: '#7dadb8',
     white: '#ffffff',

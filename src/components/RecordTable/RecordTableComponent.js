@@ -35,7 +35,7 @@ function RecordTableComponent({ records }) {
                 <DataTable.Title numeric>Delete</DataTable.Title>
             </DataTable.Header>
 
-            {records.map((record, key) => {
+            {records && records.map((record, key) => {
                 return (
                     <DataTable.Row key={record.recordId} style={styles.row}>
                         <DataTable.Cell >

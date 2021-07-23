@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { View, ScrollView, Text } from 'react-native';
+import { View, ScrollView } from 'react-native';
 
 import Title from '../../components/Title/TitleComponent';
 import RecordTableComponent from '../../components/RecordTable/RecordTableComponent';

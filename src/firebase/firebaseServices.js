@@ -1,6 +1,7 @@
 import { db } from './firebase-config';
 import 'firebase/firestore';
 import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const firestoreService = {
@@ -19,7 +20,7 @@ const firestoreService = {
             .update({
                 records
             })
-            .catch(error=>{
+            .catch(error => {
                 Alert.alert("Error saving record: ", error);
             })
     },
@@ -42,6 +43,8 @@ const firestoreService = {
     deleteUser(userId) {
         db.collection("users").doc(userId).delete().then(() => {
             Alert.alert("Your account has been successfully deleted");
+            AsyncStorage.clear();
+
         }).catch((error) => {
             Alert.alert("Error deleting account: ", error);
         });

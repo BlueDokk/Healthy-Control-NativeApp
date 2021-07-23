@@ -7,16 +7,8 @@ import { startLoading, finishLoading } from "./loading";
 import { Alert } from 'react-native';
 import storage from '../utility/storage';
 
-const storeData = async (key, value) => {
-    try {
-        await AsyncStorage.setItem(key, value)
-    } catch (error) {
-        Alert.alert(error);
-    }
-}
 
 export const loginWithEmailPassword = (email, password) => {
-
 
     return (dispatch) => {
 
@@ -26,7 +18,7 @@ export const loginWithEmailPassword = (email, password) => {
             .then(({ user }) => {
 
                 dispatch(login(user.uid, user.displayName))
-                storage.storeData('user',{userId: user.uid, displayName: user.displayName});
+                storage.storeData('user', { userId: user.uid, displayName: user.displayName, email: user.email });
                 dispatch(finishLoading());
 
                 console.log('Successful login');
@@ -46,7 +38,6 @@ export const registerWithEmailPasswordName = (email, password, name) => {
         records: []
     }
 
-
     return (dispatch) => {
 
         dispatch(startLoading());
@@ -54,13 +45,12 @@ export const registerWithEmailPasswordName = (email, password, name) => {
         authService.signup(email, password)
             .then(async ({ user }) => {
 
+                firestoreService.sendData(dataUser, user.uid);
                 await user.updateProfile({ displayName: name });
-
+            
                 dispatch(login(user.uid, user.displayName))
-                storage.storeData('user',{userId: user.uid, displayName: user.displayName});
                 dispatch(finishLoading());
 
-                firestoreService.sendData(dataUser, user.uid);
 
                 console.log('Successful registration')
 
@@ -90,6 +80,7 @@ export const startLogout = () => {
     return async (dispatch) => {
 
         await authService.logOut();
+        AsyncStorage.clear();
         dispatch(logout());
     }
 
@@ -98,9 +89,10 @@ export const startLogout = () => {
 export const deleteAccount = (userId) => {
 
     return (dispatch) => {
+
         firestoreService.deleteUser(userId);
-        authService.deleteAccount(userId);
         dispatch(logout());
+        authService.deleteAccount(userId);
     }
 
 }
