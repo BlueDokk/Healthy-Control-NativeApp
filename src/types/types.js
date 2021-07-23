@@ -8,6 +8,6 @@ export const types = {
 
     lastBmi: '[UI] Calculate BMI',
     saveRecord: '[UI] Save record',
-    updateRecords: '[UI] Update records in Store'
+    updateRecords: '[UI] Update records in Store',
 
 }

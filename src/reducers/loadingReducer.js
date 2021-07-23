@@ -14,6 +14,9 @@ export const loadingReducer = (state = initialState, action) => {
         case types.finishLoading:
             return { loading: false };
 
+        case types.logout:
+            return { loading: false};
+
         default:
             return state;
 

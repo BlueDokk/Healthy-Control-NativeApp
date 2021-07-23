@@ -12,9 +12,8 @@ import Title from '../../components/Title/TitleComponent';
 import { selectCalculatorImage } from '../../utility/selectImageCalculator';
 import { LinearGradient } from 'expo-linear-gradient';
 import firestoreService from '../../firebase/firebaseServices';
-import { lastBmi, saveRecord } from '../../actions/ui';
+import { getRecordsFromFirestore, lastBmi, saveRecord } from '../../actions/ui';
 import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicatorComponent';
-
 
 import styles from './styles';
 import colors from '../../config/colors';
@@ -32,14 +31,22 @@ function CalculatorScreen(props) {
   const { loading } = useSelector(state => state.loading);
   const { uid: userId } = useSelector(state => state.auth);
 
+  const saveRecordsInFireStore = () => {
+    if(records) firestoreService.saveRecord(records, userId);
+  }
+
+  useEffect(() => {
+    
+    dispatch(getRecordsFromFirestore());
+
+  }, [dispatch]);
 
   useEffect(() => {
 
-    // Every time the records change it is stored in the fireStore database.
-    if (records) firestoreService.saveRecord(records, userId);
+    saveRecordsInFireStore();
     setBmiImage(selectCalculatorImage(bmiScore));
 
-  }, [bmiScore, records])
+  }, [bmiScore, records]);
 
   const calculateBmi = (weight, height) => {
 

@@ -14,14 +14,16 @@ import { startLogout } from '../actions/auth';
 
 
 function DashboardNavigator(props) {
-    
-    const {userId} = useSelector(state => state.ui)
+
+    const { userId } = useSelector(state => state.ui);
+    const { records } = useSelector(state => state.ui);
+
     const Tab = createBottomTabNavigator();
     const dispatch = useDispatch();
-    
+
     const handleLogout = () => {
-    
-        dispatch(startLogout(userId))
+
+        dispatch(startLogout(userId));
     };
     return (
         <Tab.Navigator
@@ -45,10 +47,11 @@ function DashboardNavigator(props) {
                         <ButtonTab
                             icon='info-circle'
                             label='About BMI'
-                            focused = {focused}
+                            focused={focused}
                             size={size}
                         />
                     ),
+
                 }}
             />
             <Tab.Screen
@@ -59,10 +62,11 @@ function DashboardNavigator(props) {
                         <ButtonTab
                             icon='server'
                             label='My Records'
-                            focused = {focused}
+                            focused={focused}
                             size={size}
                         />
-                    )
+                    ),
+                    tabBarBadge: records?.length 
                 }}
             />
             <Tab.Screen
@@ -72,13 +76,13 @@ function DashboardNavigator(props) {
                     tabBarIcon: ({ focused, size }) => (
                         <ButtonTab
                             icon='calculator'
-                            focused = {focused}
+                            focused={focused}
                             color={colors.primary}
-                            size={size + 12 }
+                            size={size + 12}
                         />
                     ),
                     tabBarButton: (props) => (
-                        <ButtonTabMainComponent {...props}/>
+                        <ButtonTabMainComponent {...props} />
                     )
                 }}
             />
@@ -90,7 +94,7 @@ function DashboardNavigator(props) {
                         <ButtonTab
                             icon='user-alt'
                             label='Profile'
-                            focused = {focused}
+                            focused={focused}
                             size={size}
                         />
                     )
@@ -103,11 +107,11 @@ function DashboardNavigator(props) {
                     tabBarIcon: ({ focused, color, size }) => (
                         <TouchableOpacity onPress={handleLogout}>
                             <ButtonTab
-                            icon='sign-out-alt'
-                            label='Log Out'
-                            focused = {focused}
-                            size={size}
-                        />
+                                icon='sign-out-alt'
+                                label='Log Out'
+                                focused={focused}
+                                size={size}
+                            />
                         </TouchableOpacity>
                     )
                 }}

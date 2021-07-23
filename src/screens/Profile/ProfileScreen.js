@@ -7,33 +7,21 @@ import Screen from '../../components/ScreenTag/ScreenTagComponent';
 import storage from '../../utility/storage';
 import ItemProfileComponent from '../../components/ItemProfile/ItemProfileComponent';
 import { deleteAccount } from '../../actions/auth';
-import firestoreService from '../../firebase/firebaseServices';
+// import firestoreService from '../../firebase/firebaseServices';
 
 import styles from './styles';
 import colors from '../../config/colors';
 
-
-
 function ProfileScreen(props) {
 
-  const [username, setUsername] = useState(null);
-  const [email, setEmail] = useState(null);
-  const {userId} = useSelector(state => state.ui)
+  const { username, email } = useSelector(state => state.auth)
   const dispatch = useDispatch();
 
-  const getUsername = async () => {
-    const { displayName, email } = await storage.getData('user');
-    setUsername(displayName);
-    setEmail(email);
-  }
 
-  useEffect(() => {
-    getUsername();
-  }, [])
+  const handleDeleteAccount = () => {
 
-  const handleDeleteAccount = ()=>{
-    firestoreService.deleteUser(userId);
-    dispatch(deleteAccount(userId));
+    dispatch(deleteAccount());
+
   }
 
 

@@ -13,16 +13,25 @@ import { getRecordsFromFirestore } from '../actions/ui';
 function AppNavigator() {
 
 
-    const userId = storage.getData('user');
-    const [user, setUser] = useState(userId || null);
+
+    const [user, setUser] = useState(null);
 
     const dispatch = useDispatch();
 
+    const getUserFromAsyncStorage = async () => {
+        const { userId } = await storage.getData('user');
+        setUser(userId);
+        console.log(userId);
+    }
+
     const getCurrentUser = () => {
+
+        getUserFromAsyncStorage();
+
         authService.currentUser((user) => {
             if (user?.uid) {
                 storage.storeData('user', { userId: user.uid, displayName: user.displayName, email: user.email });
-                dispatch(login(user.uid, user.displayName));
+                dispatch(login(user.uid, user.displayName, user.email));
                 dispatch(getRecordsFromFirestore());
                 return setUser(user.uid);
             }
@@ -35,9 +44,9 @@ function AppNavigator() {
     }, [])
 
     return (
-            <NavigationContainer theme={navigationTheme}>
-                {user ? <DashboardNavigator /> : <AuthNavigator />}
-            </NavigationContainer>
+        <NavigationContainer theme={navigationTheme}>
+            {user ? <DashboardNavigator /> : <AuthNavigator />}
+        </NavigationContainer>
     );
 }
 

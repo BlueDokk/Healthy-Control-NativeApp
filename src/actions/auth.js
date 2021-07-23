@@ -6,6 +6,7 @@ import { types } from "../types/types";
 import { startLoading, finishLoading } from "./loading";
 import { Alert } from 'react-native';
 import storage from '../utility/storage';
+import { updateRecords } from './ui';
 
 
 export const loginWithEmailPassword = (email, password) => {
@@ -16,8 +17,8 @@ export const loginWithEmailPassword = (email, password) => {
 
         authService.login(email, password)
             .then(({ user }) => {
-
-                dispatch(login(user.uid, user.displayName))
+                console.log(user.email);
+                dispatch(login(user.uid, user.displayName, user.email));
                 storage.storeData('user', { userId: user.uid, displayName: user.displayName, email: user.email });
                 dispatch(finishLoading());
 
@@ -47,12 +48,12 @@ export const registerWithEmailPasswordName = (email, password, name) => {
 
                 firestoreService.sendData(dataUser, user.uid);
                 await user.updateProfile({ displayName: name });
-            
-                dispatch(login(user.uid, user.displayName))
+
+                dispatch(login(user.uid, user.displayName, user.email));
                 dispatch(finishLoading());
 
 
-                console.log('Successful registration')
+                Alert.alert('Successful registration')
 
             }).catch(error => {
                 Alert.alert(`${error}`);
@@ -62,11 +63,12 @@ export const registerWithEmailPasswordName = (email, password, name) => {
 }
 
 
-export const login = (uid, displayName) => ({
+export const login = (uid, displayName, email) => ({
     type: types.login,
     payload: {
         uid,
-        displayName
+        displayName,
+        email
     }
 })
 
@@ -79,20 +81,32 @@ export const startLogout = () => {
 
     return async (dispatch) => {
 
-        await authService.logOut();
-        AsyncStorage.clear();
-        dispatch(logout());
+        AsyncStorage.clear()
+            .then(async () => {
+                await authService.logOut();
+                dispatch(logout());
+            }).catch((error) => {
+                Alert.alert(`${error}`);
+            })
     }
 
 }
 
-export const deleteAccount = (userId) => {
+export const deleteAccount = () => {
 
-    return (dispatch) => {
+    return async (dispatch) => {
+        const { userId } = await storage.getData('user');
+        console.log(userId);
 
-        firestoreService.deleteUser(userId);
-        dispatch(logout());
-        authService.deleteAccount(userId);
+        firestoreService.deleteUser(userId).then(() => {
+            Alert.alert("Your account has been successfully deleted");
+            dispatch(updateRecords([]))
+            dispatch(startLogout());
+            authService.deleteAccount(userId);
+        }).catch((error) => {
+            Alert.alert("Error deleting account: ", error);
+        });;
+
     }
 
 }

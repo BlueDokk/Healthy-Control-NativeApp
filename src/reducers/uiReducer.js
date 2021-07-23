@@ -32,6 +32,8 @@ export const uiReducer = (state = {}, action) => {
                 records: action.payload.records
             }
 
+        case types.logout:
+            return {};
 
 
         default:

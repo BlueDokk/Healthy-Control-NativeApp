@@ -41,13 +41,7 @@ const firestoreService = {
     },
 
     deleteUser(userId) {
-        db.collection("users").doc(userId).delete().then(() => {
-            Alert.alert("Your account has been successfully deleted");
-            AsyncStorage.clear();
-
-        }).catch((error) => {
-            Alert.alert("Error deleting account: ", error);
-        });
+        return db.collection("users").doc(userId).delete();
     }
 }
 
