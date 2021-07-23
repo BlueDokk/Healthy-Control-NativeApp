@@ -93,8 +93,8 @@ export const startLogout = () => {
 export const deleteAccount = () => {
 
     return async (dispatch) => {
+
         const { userId } = await storage.getData('user');
-        console.log(userId);
 
         firestoreService.deleteUser(userId).then(() => {
             Alert.alert("Your account has been successfully deleted");
