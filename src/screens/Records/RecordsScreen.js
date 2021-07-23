@@ -7,7 +7,7 @@ import RecordTableComponent from '../../components/RecordTable/RecordTableCompon
 
 import styles from './styles';
 
-function RecordsScreen(props) {
+function RecordsScreen() {
 
   const { records } = useSelector(state => state.ui)
 
@@ -15,8 +15,7 @@ function RecordsScreen(props) {
     <ScrollView>
       <View style={styles.container}>
         <Title marginTop={20}>My Records</Title>
-  <RecordTableComponent records={records}/>
-        
+        <RecordTableComponent records={records} />
       </View>
     </ScrollView>
   );

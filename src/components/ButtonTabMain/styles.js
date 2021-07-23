@@ -1,4 +1,4 @@
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import colors from '../../config/colors';
 
 const styles = StyleSheet.create({
@@ -13,13 +13,20 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.8,
         shadowRadius: 3.5,
-        elevation: 5,
         width: 80,
         height:80,
         borderRadius:40,
         backgroundColor: colors.white,
         borderColor: colors.primary,
         borderWidth: 8,
+        ...Platform.select({
+            iod: {
+                zIndex: 5
+            },
+            android: {
+                elevation: 5,
+            }
+        }),
     }
 });
 

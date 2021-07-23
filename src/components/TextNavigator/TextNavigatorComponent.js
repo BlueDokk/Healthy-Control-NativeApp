@@ -4,8 +4,6 @@ import styles from './styles';
 
 function TextNavigatorComponent({ children, targetPath, style }) {
 
-
-
   return (
 
     <TouchableOpacity onPress={targetPath}>

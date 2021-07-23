@@ -19,15 +19,20 @@ function ActivityIndicatorComponent({ visible = false }) {
     );
 }
 
-console.log(Platform.OS);
-
 const styles = StyleSheet.create({
     overlay: {
         backgroundColor: colors.white,
         height: "100%",
         opacity: 0.8,
         width: "100%",
-        elevation: 1,
+        ...Platform.select({
+            iod: {
+                zIndex: 1
+            },
+            android: {
+                elevation: 1,
+            }
+        }),
     }
 })
 

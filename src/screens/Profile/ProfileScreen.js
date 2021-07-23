@@ -17,13 +17,11 @@ function ProfileScreen(props) {
   const { username, email } = useSelector(state => state.auth)
   const dispatch = useDispatch();
 
-
   const handleDeleteAccount = () => {
 
     dispatch(deleteAccount());
 
   }
-
 
   return (
     <Screen style={styles.container}>

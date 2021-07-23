@@ -13,7 +13,7 @@ import ButtonTabMainComponent from '../components/ButtonTabMain/ButtonTabMainCom
 import { startLogout } from '../actions/auth';
 
 
-function DashboardNavigator(props) {
+function DashboardNavigator() {
 
     const { userId } = useSelector(state => state.ui);
     const { records } = useSelector(state => state.ui);

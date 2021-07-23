@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import AppLoading from 'expo-app-loading';
 
 import { NavigationContainer } from '@react-navigation/native';
 import DashboardNavigator from './DashboardNavigator';
@@ -34,7 +33,7 @@ function AppNavigator() {
     }
 
     // Observer that detects changes in the state of the session.
-    const getCurrentUser = () => {
+    const getCurrentUserFromObserver = () => {
 
         dispatch(startLoading());
         authService.currentUser((user) => {
@@ -53,7 +52,7 @@ function AppNavigator() {
 
     useEffect(() => {
         getUserFromAsyncStorage();
-        getCurrentUser();
+        getCurrentUserFromObserver();
     }, [])
 
     return (

@@ -19,15 +19,16 @@ import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndica
 import styles from './styles';
 import colors from '../../config/colors';
 
+// Notification settings for the device.
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
-    shouldPlaySound: false,
+    shouldPlaySound: true,
     shouldSetBadge: false,
   }),
 });
 
-function CalculatorScreen(props) {
+function CalculatorScreen() {
 
   const [weight, setWeight] = useState(null);
   const [height, setHeight] = useState(null);
@@ -71,13 +72,14 @@ function CalculatorScreen(props) {
     const normalizedWeight = parseFloat(weight);
     const normalizeHeight = parseFloat(height) / 100;
 
+    // Initial validation of entries.
     if (normalizedWeight <= 0 || normalizeHeight <= 0 || height === null || weight === null) {
       setWeight(null);
       setHeight(null);
       return setShowAlert(true);
     }
 
-    // Calculate BMI only if there are numeric entries
+    // Calculate BMI only if there are numeric entries.
     const result = (typeof normalizedWeight === 'number' && typeof normalizeHeight === 'number') ?
       (normalizedWeight / (normalizeHeight * normalizeHeight)).toFixed(1)
       : 0;
@@ -93,7 +95,6 @@ function CalculatorScreen(props) {
     calculateBmi(weight, height);
     dispatch(saveRecord());
     showNotification({title:'Healthy Control Notification', body:'Body mass index (BMI) score has been saved.'});
-
 
   }
 

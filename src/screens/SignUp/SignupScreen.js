@@ -21,7 +21,6 @@ function SignupScreen({ navigation }) {
 
   const [signupFailed, setSignupFailed] = useState(false);
   const { loading } = useSelector(state => state.loading);
-
   const dispatch = useDispatch();
 
 

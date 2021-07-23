@@ -4,7 +4,7 @@ import LottieView from 'lottie-react-native';
 
 import styles from './styles';
 
-function BannerImageComponent(props) {
+function BannerImageComponent() {
     return (
         <View style={styles.bannerImageContainer}>
             <LottieView

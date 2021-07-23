@@ -12,21 +12,19 @@ import SeparatorComponent from '../../components/Separator/SeparatorComponent';
 import SubmitButton from '../../components/SubmitButton/SubmitButtonComponent';
 import validationSchemas from '../../utility/validationSchemas';
 import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicatorComponent';
+import { loginWithEmailPassword } from '../../actions/auth';
 
 import styles from './styles';
-import { loginWithEmailPassword } from '../../actions/auth';
 
 function LoginScreen({ navigation }) {
 
   const [loginFailed, setLoginFailed] = useState(false);
   const { loading } = useSelector(state => state.loading);
-
   const dispatch = useDispatch();
 
   const handleSubmit = (userInfo) => {
 
     const { email, password } = userInfo;
-
     dispatch(loginWithEmailPassword(email, password));
 
   };

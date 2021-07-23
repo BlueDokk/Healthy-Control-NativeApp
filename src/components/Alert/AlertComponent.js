@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import colors from '../../config/colors';
 
