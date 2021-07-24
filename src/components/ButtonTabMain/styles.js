@@ -15,13 +15,6 @@ const styles = StyleSheet.create({
         ...Platform.select({
             iod: {
                 zIndex: 5,
-                shadowColor: "#ffffff",
-                shadowOffset: {
-                    width: 0,
-                    height: 8,
-                },
-                shadowOpacity: 0.2,
-                shadowRadius: 3.5,
             },
             android: {
                 elevation: 5,
