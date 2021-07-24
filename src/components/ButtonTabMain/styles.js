@@ -6,22 +6,22 @@ const styles = StyleSheet.create({
         top: -20,
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: "#ffffff",
-        shadowOffset: {
-            width: 0,
-            height: 10,
-        },
-        shadowOpacity: 0.8,
-        shadowRadius: 3.5,
         width: 80,
-        height:80,
-        borderRadius:40,
+        height: 80,
+        borderRadius: 40,
         backgroundColor: colors.white,
         borderColor: colors.primary,
         borderWidth: 8,
         ...Platform.select({
             iod: {
-                zIndex: 5
+                zIndex: 5,
+                shadowColor: "#ffffff",
+                shadowOffset: {
+                    width: 0,
+                    height: 8,
+                },
+                shadowOpacity: 0.2,
+                shadowRadius: 3.5,
             },
             android: {
                 elevation: 5,
