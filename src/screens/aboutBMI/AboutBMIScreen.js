@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
+import { Platform } from 'react-native';
 
 import Screen from '../../components/ScreenTag/ScreenTagComponent';
 import Separator from '../../components/Separator/SeparatorComponent';
@@ -16,10 +17,10 @@ function AboutBMIScreen(props) {
     <Screen style={styles.container}>
       <Title marginTop={20}>About BMI</Title>
       <View style={styles.aboutContainer}>
-        <LinearGradient
+        {(Platform.OS === 'android')&&<LinearGradient
           colors={['transparent', colors.background]}
           style={styles.backgroundContainer}
-        />
+        />}
 
         <Image
         resizeMode={'contain'}

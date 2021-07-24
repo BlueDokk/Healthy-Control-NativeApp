@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Image, View } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import { Platform } from 'react-native';
 
 import AccentText from '../../components/AccentText/AccentTextComponent';
 import AlertComponent from '../../components/Alert/AlertComponent';
@@ -104,10 +105,10 @@ function CalculatorScreen() {
       <Screen style={styles.container}>
         <Title marginTop={20}>BMI Calculator</Title>
         <View style={styles.calculator}>
-          <LinearGradient
+          {(Platform.OS === 'android')&&<LinearGradient
             colors={['transparent', colors.background]}
             style={styles.backgroundCalculator}
-          />
+          />}
           <Image
             source={bmiImage}
             resizeMode={'contain'}

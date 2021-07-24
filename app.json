@@ -2,6 +2,7 @@
   "expo": {
     "name": "HealthyControl",
     "slug": "HealthyControl",
+    "privacy": "public",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,7 +26,7 @@
         "backgroundColor": "#FFFFFF"
       }
     },
-    "notification":{
+    "notification": {
       "iosDisplayInForeground": true
     },
     "web": {

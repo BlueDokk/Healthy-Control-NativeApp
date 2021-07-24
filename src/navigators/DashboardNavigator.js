@@ -7,7 +7,7 @@ import CalculatorScreen from '../screens/Calculator/CalculatorScreen';
 import AboutBMIScreen from '../screens/aboutBMI/AboutBMIScreen';
 import ProfileScreen from '../screens/Profile/ProfileScreen';
 import colors from '../config/colors';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Platform, TouchableOpacity } from 'react-native';
 import ButtonTab from '../components/ButtonTab/ButtonTabComponent';
 import ButtonTabMainComponent from '../components/ButtonTabMain/ButtonTabMainComponent';
 import { startLogout } from '../actions/auth';
@@ -32,10 +32,16 @@ function DashboardNavigator() {
                 showLabel: false,
                 keyboardHidesTabBar: true,
                 style: {
-                    elevation: 0,
+                    ...Platform.select({
+                        ios: {
+                          zIndex: 0
+                        },
+                        android: {
+                          elevation: 0
+                        },
+                    }),
                     backgroundColor: colors.primary,
                     height: 90,
-                    ...styles.shadow
                 }
             }}
         >
@@ -120,19 +126,5 @@ function DashboardNavigator() {
         </Tab.Navigator>
     );
 }
-
-const styles = StyleSheet.create({
-    shadow: {
-        shadowColor: "#ffffff",
-        shadowOffset: {
-            width: 0,
-            height: 10,
-        },
-        shadowOpacity: 0.8,
-        shadowRadius: 3.5,
-        elevation: 5,
-    }
-});
-
 
 export default DashboardNavigator;
