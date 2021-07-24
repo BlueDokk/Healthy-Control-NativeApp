@@ -85,7 +85,7 @@ function CalculatorScreen() {
       : 0;
 
     setBmiScore(result);
-    showNotification({title:'Healthy Control Notification', body:'New calculation of body mass index (BMI) has been carried out.'});
+    showNotification({ title: 'Healthy Control Notification', body: 'New calculation of body mass index (BMI) has been carried out.' });
     dispatch(lastBmi(weight, height, result));
 
   }
@@ -94,7 +94,7 @@ function CalculatorScreen() {
 
     calculateBmi(weight, height);
     dispatch(saveRecord());
-    showNotification({title:'Healthy Control Notification', body:'Body mass index (BMI) score has been saved.'});
+    showNotification({ title: 'Healthy Control Notification', body: 'Body mass index (BMI) score has been saved.' });
 
   }
 
